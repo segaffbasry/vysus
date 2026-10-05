@@ -52,15 +52,41 @@ export const services = {
   ] as Link[],
 };
 
+/* The live homepage shows a single "Case studies" banner. Here it showcases the four most recent case studies from
+   the live listing (/news-and-insights/case-studies, first page, newest first), with their own images, dates,
+   categories and summary lines. */
 export const caseStudies = {
   label: "Case studies",
   title: "Search and browse examples of our expertise delivering results",
   action: { label: "Our case studies", href: `${B}/news-and-insights/case-studies` },
-  image: { src: "/media/cases.webp", alt: "two industrial service engineers wearing safety gear assessing a control panel." },
+  items: [
+    {
+      kicker: "GeoEngineering", title: "Subsea Rock Installation Support", date: "06.07.2026", iso: "2026-07-06",
+      text: "This work was performed by Vysus’ Survey & GeoEngineering team",
+      href: `${B}/case-studies/subsea-rock-installation-support`, image: "/media/case-subsea.webp", alt: "An offshore jack-up rig with a support vessel",
+    },
+    {
+      kicker: "", title: "Preventing Buried Piping Leaks using Cathodic Protection (ICCP)", date: "16.03.2026", iso: "2026-03-16",
+      text: "This work was performed by Vysus Group's Asset Integrity Management Team.",
+      href: `${B}/case-studies/preventing-buried-piping-leaks-using-cathodic-protection-iccp`, image: "/media/case-iccp.webp", alt: "A corroded buried pipe exposed in a trench",
+    },
+    {
+      kicker: "GeoEngineering", title: "Thermal resistivity dry-out curve for cohesive soils based on parametric testing", date: "16.03.2026", iso: "2026-03-16",
+      text: "This work was performed by Vysus’ Survey & GeoEngineering team",
+      href: `${B}/case-studies/thermal-resistivity-dry-out-curve-for-cohesive-soils-based-on-parametric-testing`, image: "/media/case-thermal.webp", alt: "An offshore wind farm with a buried export cable",
+    },
+    {
+      kicker: "GeoEngineering", title: "Integrated 3D Ground Model for a challenging Irish west coast", date: "16.03.2026", iso: "2026-03-16",
+      text: "This work was performed by Vysus’ Survey & GeoEngineering team",
+      href: `${B}/case-studies/integrated-3d-ground-model-for-a-challenging-irish-west-coast`, image: "/media/case-ground-model.webp", alt: "A coloured bathymetric ground model of the seabed",
+    },
+  ] as (Card & { text: string })[],
 };
 
 export const whoWeAre = {
   label: "Who we are",
+  // A still from the live header film (16s), the engineer with the plant overlay.
+  image: { src: "/media/who.webp", alt: "An engineer in a hard hat reviewing plant data on a tablet" },
   title: "We are naturally progressive, always seeking to inject commercial insight, innovation and creativity into everything we do",
   links: [
     { label: "About us", href: `${B}/about` },

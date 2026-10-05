@@ -102,11 +102,10 @@ section[tabindex], footer[tabindex], main[tabindex] { outline: none; }
 .h-statement { font-weight: 400; font-size: var(--fs-statement); line-height: 1.1; letter-spacing: -0.02em; text-wrap: balance; max-width: 28em; }
 .icon { width: 1em; height: 1em; flex: none; }
 
-/* reckoner.com .brow: 16px square glowing inset (box-shadow 0 0 .25em .0625em), 8px gap, 14px / 500 uppercase,
-   letter-spacing 0.02em. Suisse has no 500, so Regular. */
-.brow { display: inline-flex; align-items: center; gap: 8px; font-size: var(--fs-small); font-weight: 400; line-height: 1.4; letter-spacing: 0.02em; text-transform: uppercase; }
-.brow-icon { width: 16px; height: 16px; flex: none; box-shadow: 0 0 0.25em 0.0625em var(--malmo) inset; }
-[data-scene="dark"] .brow-icon { box-shadow: 0 0 0.25em 0.0625em var(--neon) inset; }
+/* Section labels: reckoner.com .brow type (14px, uppercase, 0.02em), plain text with no glyph (client feedback,
+   5 Oct 2026). Malmo Green on light ground, Oslo Neon on dark. */
+.brow { display: block; font-size: 13px; font-weight: 400; line-height: 1.4; letter-spacing: 0.08em; text-transform: uppercase; color: var(--malmo); }
+[data-scene="dark"] .brow { color: var(--neon); }
 .row-head { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: var(--space-block); }
 
 /* ---------- buttons: reckoner.com .btn ---------- */
@@ -262,7 +261,7 @@ section[tabindex], footer[tabindex], main[tabindex] { outline: none; }
   .service { padding: 14px 4px; }
 }
 
-/* ---------- split (case studies, subscribe) ---------- */
+/* ---------- split (subscribe) ---------- */
 .split { background: var(--mist); }
 .split-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; align-items: center; }
 .split-body { grid-column: 1 / 6; display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-head); }
@@ -275,21 +274,52 @@ section[tabindex], footer[tabindex], main[tabindex] { outline: none; }
   .split-media { aspect-ratio: 16 / 9; }
 }
 
-/* ---------- who we are: reckoner.com .about_section ---------- */
-.who-head { display: flex; flex-direction: column; align-items: center; gap: var(--space-head); text-align: center; margin: 0 auto var(--space-block); max-width: 887px; } /* .strategies_blocks width */
-.who-blocks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; } /* .about_blocks: gap 20px */
-/* .ab_block: 30px padding, 70px between icon and text, white ground; here white/6% on Malmo with a 1px rule. */
-.who-block { position: relative; display: flex; flex-direction: column; gap: 56px; height: 100%; padding: 30px; border: 1px solid rgb(var(--white-rgb) / 0.15); background: rgb(var(--white-rgb) / 0.06); transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease); }
-.who-icon { width: 44px; height: 44px; color: var(--neon); transition: color var(--dur) var(--ease); }
-.who-title { font-size: var(--fs-h3); font-weight: 400; line-height: 1.2; letter-spacing: -0.02em; padding-right: 32px; }
-.who-go { position: absolute; right: 30px; bottom: 30px; }
-.who-go .icon { width: 18px; height: 18px; }
+/* ---------- case studies: four photo-led cards ---------- */
+.cases { background: var(--mist); }
+.cases-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: var(--space-block); }
+.cases-intro { display: flex; flex-direction: column; gap: var(--space-head); max-width: 640px; }
+.cases-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.case-card { position: relative; display: flex; flex-direction: column; gap: 12px; height: 100%; padding-bottom: 4px; }
+.case-media { display: block; aspect-ratio: 4 / 5; overflow: hidden; background: rgb(var(--malmo-rgb) / 0.12); }
+.case-media img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.85); transition: transform 0.9s var(--ease-out); }
+.case-meta { display: flex; gap: 14px; margin-top: 4px; font-size: var(--fs-micro); font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; color: rgb(var(--ink-rgb) / 0.7); }
+.case-meta span { color: var(--malmo); }
+.case-title { font-size: 20px; font-weight: 400; line-height: 1.2; letter-spacing: -0.02em; padding-right: 8px; }
+.case-text { font-size: var(--fs-small); line-height: 1.45; color: rgb(var(--ink-rgb) / 0.7); }
+/* The arrow sits on the photo's corner, a square in the button language. */
+.case-go { position: absolute; top: 12px; right: 12px; display: grid; place-items: center; width: 40px; height: 40px; background: var(--neon); color: var(--ink); transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease); }
+.case-go .icon { width: 16px; height: 16px; }
 @media (hover: hover) {
-  .who-block:hover { background: var(--white); border-color: var(--white); color: var(--ink); }
-  .who-block:hover .who-icon { color: var(--malmo); }
+  .case-card:hover .case-media img { transform: scale(1.05); }
+  .case-card:hover .case-go { background: var(--malmo); color: var(--white); }
 }
-@media (max-width: 992px) { .who-blocks { grid-template-columns: 1fr 1fr; } .who-block { gap: 36px; padding: 24px; } .who-go { right: 24px; bottom: 24px; } }
-@media (max-width: 480px) { .who-blocks { grid-template-columns: 1fr; gap: 10px; } .who-block { flex-direction: row; align-items: center; gap: 18px; } .who-icon { width: 32px; height: 32px; } .who-go { top: 50%; bottom: auto; transform: translateY(-50%); } }
+@media (max-width: 1100px) and (min-width: 701px) { .cases-grid { grid-template-columns: repeat(2, 1fr); row-gap: 36px; } .case-media { aspect-ratio: 16 / 10; } }
+/* Phones: a swipeable strip, cards 78% wide, snapping, edge to edge. */
+@media (max-width: 700px) {
+  .cases-grid { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 calc(var(--gutter) * -1); padding: 0 var(--gutter) 6px; scroll-padding: 0 var(--gutter); scrollbar-width: none; }
+  .cases-grid::-webkit-scrollbar { display: none; }
+  .cases-grid > li { flex: 0 0 78%; scroll-snap-align: start; }
+}
+
+/* ---------- who we are: editorial split on Malmo Green ---------- */
+.who-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; align-items: center; }
+.who-body { grid-column: 1 / 7; display: flex; flex-direction: column; gap: var(--space-head); }
+.who-links { margin-top: 8px; border-top: 1px solid rgb(var(--white-rgb) / 0.15); }
+.who-links li { border-bottom: 1px solid rgb(var(--white-rgb) / 0.15); }
+.who-link { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 16px 0; font-size: var(--fs-h3); font-weight: 400; line-height: 1.2; letter-spacing: -0.02em; }
+.who-link span, .who-link .icon { transition: transform var(--dur) var(--ease-out), color var(--dur) var(--ease); }
+.who-link .icon { width: 20px; height: 20px; color: rgb(var(--white-rgb) / 0.6); }
+@media (hover: hover) {
+  .who-link:hover span { transform: translateX(8px); }
+  .who-link:hover .icon { transform: translateX(-4px); color: var(--neon); }
+}
+.who-media { grid-column: 8 / 13; aspect-ratio: 1 / 1; }
+.who-media img { object-position: 22% 35%; } /* keeps the engineer's face in frame */
+@media (max-width: 860px) {
+  .who-grid { grid-template-columns: 1fr; gap: var(--space-block); }
+  .who-body, .who-media { grid-column: auto; }
+  .who-media { aspect-ratio: 16 / 10; order: -1; }
+}
 
 /* ---------- news: reckoner.com .ins_block ---------- */
 .news { background: var(--white); }
@@ -299,7 +329,7 @@ section[tabindex], footer[tabindex], main[tabindex] { outline: none; }
 .news-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.9s var(--ease-out); }
 .news-media.is-portrait img { width: auto; height: 100%; margin: 0 auto; object-fit: contain; } /* a 350px portrait: shown at its own size, not stretched */
 .news-meta { display: flex; gap: 12px; font-size: var(--fs-micro); font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase; color: rgb(var(--ink-rgb) / 0.7); }
-.news-meta span::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 8px; vertical-align: 1px; background: var(--neon); }
+.news-meta span { color: var(--malmo); }
 .news-title { font-size: var(--fs-h3); font-weight: 400; line-height: 1.2; letter-spacing: -0.02em; }
 .news-more { position: relative; align-self: flex-start; margin-top: auto; padding-bottom: 4px; font-size: var(--fs-small); font-weight: 400; }
 .link-line { position: absolute; left: 0; bottom: 0; width: 100%; height: 1px; background: currentColor; transition: width var(--dur) var(--ease); } /* .link:hover .link_line { width: 0% } */

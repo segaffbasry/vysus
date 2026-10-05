@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import { brandIcons } from "@/lib/brand-icons";
-import { sprite, type SpriteName } from "@/lib/sprite";
 
 const glyphs = {
   arrow: <path d="M5 12h13M12.5 6.5 18 12l-5.5 5.5" fill="none" stroke="currentColor" strokeWidth="1.5" />,
@@ -16,16 +15,6 @@ export function Icon({ name, className }: { name: IconName; className?: string }
   return (
     <svg className={`icon ${className ?? ""}`} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
       {brand ? <path d={brand} fill="currentColor" /> : glyphs[name as keyof typeof glyphs]}
-    </svg>
-  );
-}
-
-/* One of the live site's own line icons, from its SVG sprite. */
-export function SpriteIcon({ name, className }: { name: SpriteName; className?: string }) {
-  const s = sprite[name];
-  return (
-    <svg className={`sprite-icon ${className ?? ""}`} viewBox={s.viewBox} aria-hidden="true" focusable="false">
-      {s.d.map((d) => <path key={d.slice(0, 24)} d={d} fill="currentColor" />)}
     </svg>
   );
 }
@@ -47,13 +36,8 @@ export function Button({ href, children, tone = "solid", className, icon }: {
   );
 }
 
-/* reckoner.com's .brow: a 16px square drawn as a soft inset glow (box-shadow 0 0 .25em .0625em) beside a 14px
-   uppercase label. The square takes Oslo Neon on dark ground and Malmo Green on light. */
+/* A small uppercase section label (reckoner.com's .brow type: 14px, uppercase, 0.02em). Plain text, no glyph:
+   Malmo Green on light ground, Oslo Neon on dark. */
 export function Label({ children, as: Tag = "p", id, reveal = true }: { children: ReactNode; as?: "p" | "h2" | "span"; id?: string; reveal?: boolean }) {
-  return (
-    <Tag className="brow" id={id} {...(reveal ? { "data-reveal": "label" } : {})}>
-      <span className="brow-icon" aria-hidden="true" />
-      <span className="brow-text">{children}</span>
-    </Tag>
-  );
+  return <Tag className="brow" id={id} {...(reveal ? { "data-reveal": "label" } : {})}>{children}</Tag>;
 }

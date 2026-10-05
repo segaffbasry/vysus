@@ -1,7 +1,7 @@
 import { Button, Label } from "@/components/ui";
 
 /* The live site's "alternating content" block (label, statement, one button, one photograph) in Reckoner's type:
-   a 32px statement with a 16px square label. Used for Case studies and Subscribe, mirrored between the two. */
+   a 32px statement with a 16px square label. Used for Subscribe, photograph first. */
 export function Split({ id, label, title, action, image, flip = false, late = false }: {
   id: string; label: string; title: string; action: { label: string; href: string }; image: { src: string; alt: string }; flip?: boolean; late?: boolean;
 }) {

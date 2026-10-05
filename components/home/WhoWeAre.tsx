@@ -1,32 +1,30 @@
-import { Icon, Label, SpriteIcon } from "@/components/ui";
+import { Icon, Label } from "@/components/ui";
 import { whoWeAre } from "@/lib/content";
-import type { SpriteName } from "@/lib/sprite";
 
-// One of the live site's own line icons per destination.
-const icons: SpriteName[] = ["leaf", "globe", "study", "insights"];
-
-/* Who we are, on Malmo Green: reckoner.com's About section (centred square label, a 32px statement, then a row of
-   blocks that rise 1.5em in turn) with the live statement and its four links. The blocks keep Reckoner's
-   .ab_block proportions (30px padding, icon above a 22px title) and its 0.5s hover. */
+/* Who we are, on Malmo Green, as an editorial split: the label, the live statement and its four links as a clean
+   list of hairline rows on the left; a still from the Vysus film on the right (clip-open, parallax). Hovering a row
+   slides its label and arrow and brightens the arrow to Oslo Neon. No tiles, no icons. */
 export function WhoWeAre() {
   return (
     <section className="who section" id="who-we-are" data-scene="dark" aria-labelledby="who-title" tabIndex={-1}>
-      <div className="wrap">
-        <div className="who-head">
+      <div className="wrap who-grid">
+        <div className="who-body">
           <Label>{whoWeAre.label}</Label>
           <h2 id="who-title" className="h-statement" data-reveal="head">{whoWeAre.title}</h2>
+          <ul className="who-links" data-reveal="cards">
+            {whoWeAre.links.map((l) => (
+              <li key={l.label}>
+                <a className="who-link" href={l.href} target="_blank" rel="noopener">
+                  <span>{l.label}</span>
+                  <Icon name="arrow" />
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
-        <ul className="who-blocks" data-reveal="cards">
-          {whoWeAre.links.map((l, i) => (
-            <li key={l.label}>
-              <a className="who-block" href={l.href} target="_blank" rel="noopener">
-                <SpriteIcon name={icons[i]} className="who-icon" />
-                <span className="who-title">{l.label}</span>
-                <span className="who-go" aria-hidden="true"><Icon name="arrow" /></span>
-              </a>
-            </li>
-          ))}
-        </ul>
+        <figure className="who-media frame" data-reveal="image">
+          <img src={whoWeAre.image.src} alt={whoWeAre.image.alt} data-parallax loading="lazy" />
+        </figure>
       </div>
     </section>
   );

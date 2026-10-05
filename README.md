@@ -25,8 +25,8 @@ carries `target="_blank" rel="noopener"`.
 | 1 | Hero | statement + film | statement + film | live header film, bar field over it |
 | 1 | Stats (in the hero's bottom bar) | 2 | 2 | 70GW, 2 million; count up on entry |
 | 2 | Our Services | 7 + 1 photo | 7 + 1 photo | |
-| 3 | Case studies | 1 + CTA + photo | same | |
-| 4 | Who we are | statement + 4 links | statement + 4 links | each link gets one of the live sprite's line icons |
+| 3 | Case studies | 1 banner + CTA + photo | statement + CTA + 4 case studies | client feedback: showcase real case studies instead of a banner. The four most recent from the live listing, with their own images, dates and categories |
+| 4 | Who we are | statement + 4 links | statement + 4 links + film still | editorial split (client feedback: the boxed icon tiles felt dated) |
 | 5 | News and insights | Announcement (1) + Featured (2) | 3 in one row | two live blocks merged; "More News" kept |
 | 6 | Subscribe | 1 + CTA + photo | same | |
 | 7 | Footer CTA + footer | 1 CTA, 4 socials, 7 links | same | the CTA ("Send us a message") joins the footer |
@@ -42,12 +42,13 @@ size on a Mist ground rather than stretched. The live "Power, Renewables & Trans
 
 | Width | Height | Viewports |
 | --- | --- | --- |
-| 1440 × 900 | 4,518px | 5.0 |
-| 768 × 1024 | 5,490px | 5.4 |
-| 375 × 812 | 5,211px | 6.4 |
+| 1440 × 900 | 5,000px | 5.6 |
+| 768 × 1024 | 6,253px | 6.1 |
+| 375 × 812 | 5,647px | 7.0 |
 
 The live homepage is 7,611px at 1440. The target was 6 to 8 viewports; it lands just under at desktop because every
-live item fits in seven compact sections, and the brief also asks for the page to stay short. Section padding is
+live item fits in seven compact sections, and the brief also asks for the page to stay short. On phones the four
+case studies are a swipeable strip, so they add one card's height, not four. Section padding is
 `--space-section` (56 to 96px).
 
 ## Recon note (Phase 1, 4 Oct 2026)
@@ -138,7 +139,7 @@ footer).
 | `head` | statements | the whole phrase fades and rises 0.5em |
 | `text` | paragraphs | words rise out of a mask, 0.006s apart |
 | `label` | labels, buttons | fade and rise 0.25rem (Reckoner's `data-reveal="text"`) |
-| `cards` | service rows, Who-we-are blocks, news cards | batched, rise 1.5em, 0.1s apart (Reckoner's `.about_blocks`) |
+| `cards` | service rows, case studies, Who-we-are links, news cards | batched, rise 1.5em, 0.1s apart (Reckoner's `.about_blocks`) |
 | `image` | photographs | clip opens from the bottom over 1.2s; the `<img data-parallax>` drifts ±5% (10% travel) |
 
 Per-character work (the hero headline's word mask with a tighter stagger, the count-up) lives only in the hero.
@@ -193,7 +194,8 @@ toggle (checked with the keyboard only).
 
 - `.btn`: square buttons with 14px labels and 0.5s colour transitions. Solid is Neon, turning Malmo on hover. Glass
   has a white/15% outline and tint is white/10%; both fill white on hover.
-- `.brow`: a 16px glowing square beside an uppercase 14px label.
+- Section labels: Reckoner's `.brow` type (uppercase, letter-spaced), as plain text. The glowing square glyph was
+  removed after client feedback (5 Oct 2026).
 - Service rows: `.str_block`, a 1px rule with a Mist hover, where the Neon square turns Malmo.
 - News: `.ins_block`, with a left rule and an underline that retracts on hover.
 - Footer: two halves split by a 1px rule.
@@ -225,14 +227,26 @@ All from vysusgroup.com, downloaded by `scripts/media.sh` at the largest size th
 | --- | --- |
 | hero film and poster | `/assets/engineering-1080.webm`, `-720.webm` |
 | `services.webp` | homepage services photo (oil rig close up) |
-| `cases.webp` | homepage case studies photo (engineers at a control panel) |
+| `case-*.webp` | the four most recent case studies' listing images (/news-and-insights/case-studies) |
+| `who.webp` | a still from the hero film at 16s |
 | `subscribe.webp` | homepage subscribe photo (inbox on a phone) |
 | `news-*.webp` | the three homepage news images |
 | `public/brand/*.svg`, `app/icon.svg` | the vector logo in the homepage's SVG sprite |
 
 Photography is shown in natural colour at 85% saturation, with no duotone.
 
-## Verification (4 Oct 2026)
+## Feedback round 1 (5 Oct 2026)
+
+- "Don't like this square thing": the glowing square beside every section label is gone, as are the small squares
+  in the news meta. Labels are plain uppercase text.
+- "Could you showcase some of the case studies rather than it be a banner?": Case studies now shows the four most
+  recent live case studies as photo-led cards (date, category, title, the live summary line), with "Our case
+  studies" beside the statement. Four columns at desktop, 2 × 2 on tablet, a swipeable strip on phones.
+- "This feels very dated" (the Who-we-are tiles): rebuilt as an editorial split. The statement and the four links
+  are a clean hairline list on the left, and a still from the Vysus film is on the right. The tiles and line icons
+  were removed (and `scripts/logo.mjs` no longer extracts the sprite icons).
+
+## Verification (4 Oct 2026, re-run 6 Oct 2026)
 
 - `npm run typecheck` and `npm run build` pass. Static outputs: `/`, `/_not-found`, `/icon.svg`.
 - Headless Chrome at 375, 768 and 1440: no horizontal scroll, no console errors, no broken images, every reveal

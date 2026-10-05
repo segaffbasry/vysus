@@ -7,10 +7,11 @@ import { News } from "@/components/home/News";
 import { Services } from "@/components/home/Services";
 import { Split } from "@/components/home/Split";
 import { WhoWeAre } from "@/components/home/WhoWeAre";
-import { caseStudies, subscribe } from "@/lib/content";
+import { CaseStudies } from "@/components/home/CaseStudies";
+import { subscribe } from "@/lib/content";
 
 /* vysusgroup.com's homepage in a new skin, after reckoner.com (look and motion): a dark hero with the cursor-reactive
-   bar field over the Vysus film, then light chapters with square buttons, glowing square labels, bordered blocks and
+   bar field over the Vysus film, then light chapters with square buttons, plain uppercase labels, hairline rows and
    32px statements, and a dark close. Every item on the live homepage is here, in its live order; the two news blocks
    share one row and the footer CTA joins the footer. Copy: lib/content.ts. Systems: README.md. */
 export default function Home() {
@@ -24,7 +25,7 @@ export default function Home() {
       <main id="main" tabIndex={-1}>
         <Hero />
         <Services />
-        <Split id="case-studies" {...caseStudies} />
+        <CaseStudies />
         <WhoWeAre />
         <News />
         <Split id="subscribe" {...subscribe} flip late />
