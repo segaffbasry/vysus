@@ -108,7 +108,9 @@ export function Header() {
     const scenes = () => Array.from(document.querySelectorAll<HTMLElement>("[data-scene]"));
     const tone = () => {
       const probe = el.offsetHeight / 2;
-      const under = scenes().find((s) => { const r = s.getBoundingClientRect(); return r.top <= probe && r.bottom > probe; });
+      // The innermost scene wins (the careers panel is a dark scene inside a light section). The probe also checks x,
+      // since that panel does not span the full width.
+      const under = scenes().filter((s) => { const r = s.getBoundingClientRect(); return r.top <= probe && r.bottom > probe && r.left <= 60 && r.right >= 60; }).pop();
       const t = under?.dataset.scene === "dark" ? "dark" : "light";
       if (t !== lastTone) { el.dataset.tone = t; lastTone = t; }
     };

@@ -21,7 +21,9 @@ gsap.registerPlugin(ScrollTrigger);
        text   a paragraph: its words rise out of a mask, 0.006s apart
        label  labels and buttons: fade and rise 0.25rem (Reckoner's data-reveal="text")
        cards  a list: its children fade and rise 1.5em, 0.1s apart (Reckoner's .about_blocks)
-       image  a frame that clips open from the bottom; an <img data-parallax> inside drifts ±5% (10% travel) */
+       image  a frame that clips open from the bottom; an <img data-parallax> inside drifts ±5% (10% travel)
+   Plus one scrubbed move, data-grow (from the approved Voltwise build): a large panel scales from 92% to full size
+   while its top travels from the bottom of the screen to 30% down, so the box expands as you arrive at it. */
 export function Motion() {
   useEffect(() => {
     const guard = (e: MouseEvent) => {
@@ -85,6 +87,10 @@ export function Motion() {
 
       gsap.utils.toArray<HTMLElement>('[data-reveal="image"]').forEach((el) => {
         gsap.fromTo(el, { clipPath: "inset(0% 0% 100% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.2 * pace(el), ease: OUT, scrollTrigger: once(el, "top 92%") });
+      });
+
+      gsap.utils.toArray<HTMLElement>("[data-grow]").forEach((el) => {
+        gsap.fromTo(el, { scale: 0.92 }, { scale: 1, ease: "none", scrollTrigger: { trigger: el, scrub: true, start: "top bottom", end: "top 30%" } });
       });
 
       gsap.utils.toArray<HTMLElement>("[data-parallax]").forEach((img) => {

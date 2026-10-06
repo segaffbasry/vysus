@@ -29,6 +29,7 @@ carries `target="_blank" rel="noopener"`.
 | 4 | Who we are | statement + 4 links | statement + 4 links + film still | editorial split (client feedback: the boxed icon tiles felt dated) |
 | 5 | News and insights | Announcement (1) + Featured (2) | 3 in one row | two live blocks merged; "More News" kept |
 | 6 | Subscribe | 1 + CTA + photo | same | |
+| 6 | Careers | (nav link only) | statement, 20+ Locations, 3 values, 2 CTAs, brand film | added on client request (6 Oct 2026): the visual call to action, content from careers.vysusgroup.com |
 | 7 | Footer CTA + footer | 1 CTA, 4 socials, 7 links | same | the CTA ("Send us a message") joins the footer |
 
 Nothing on the live homepage was cut. Two pairs were merged because they repeat a pattern: the stats band moved
@@ -42,12 +43,12 @@ size on a Mist ground rather than stretched. The live "Power, Renewables & Trans
 
 | Width | Height | Viewports |
 | --- | --- | --- |
-| 1440 × 900 | 5,000px | 5.6 |
-| 768 × 1024 | 6,253px | 6.1 |
-| 375 × 812 | 5,647px | 7.0 |
+| 1440 × 900 | 5,648px | 6.3 |
+| 768 × 1024 | 6,929px | 6.8 |
+| 375 × 812 | 6,263px | 7.7 |
 
-The live homepage is 7,611px at 1440. The target was 6 to 8 viewports; it lands just under at desktop because every
-live item fits in seven compact sections, and the brief also asks for the page to stay short. On phones the four
+The live homepage is 7,611px at 1440. The target was 6 to 8 viewports; with the careers panel it now sits inside that
+range at every width. On phones the four
 case studies are a swipeable strip, so they add one card's height, not four. Section padding is
 `--space-section` (56 to 96px).
 
@@ -229,6 +230,7 @@ All from vysusgroup.com, downloaded by `scripts/media.sh` at the largest size th
 | `services.webp` | homepage services photo (oil rig close up) |
 | `case-*.webp` | the four most recent case studies' listing images (/news-and-insights/case-studies) |
 | `who.webp` | a still from the hero film at 16s |
+| `careers.mp4`, `careers-poster.jpg` | the careers site's header film (`/assets/header-v3.mp4`, 48s, the brand chevrons) |
 | `subscribe.webp` | homepage subscribe photo (inbox on a phone) |
 | `news-*.webp` | the three homepage news images |
 | `public/brand/*.svg`, `app/icon.svg` | the vector logo in the homepage's SVG sprite |
@@ -246,12 +248,28 @@ Photography is shown in natural colour at 85% saturation, with no duotone.
   are a clean hairline list on the left, and a still from the Vysus film is on the right. The tiles and line icons
   were removed (and `scripts/logo.mjs` no longer extracts the sprite icons).
 
+## Feedback round 2 (6 Oct 2026)
+
+"Could we add a careers section similar to one of the approved templates... make the call to action slightly more
+visual... the box can expand or decrease as we get to that point."
+
+- New Careers section (`components/home/Careers.tsx`) between News and Subscribe. It is one large panel playing the
+  careers site's own film (Malmo chevrons sweeping in Oslo Neon), with the copy on its dark left half: "Our global
+  reach enables Vysus Group to offer opportunities across the world.", 20+ Locations, the three values (Trust,
+  Partnership, Passion), and "View Vacancies" plus "Career testimonials".
+- The box expands on approach: `data-grow`, the scrubbed move from the approved Voltwise build. The panel scales
+  from 92% to 100% while its top travels from the bottom of the screen to 30% down (measured 0.926 → 0.966 → 1).
+  It is skipped under reduced motion.
+- The film is muted, loops, starts only when the panel is in view, pauses off screen and under reduced motion, and
+  has its own pause button.
+- The header probe now takes the innermost scene, so the dark panel inside the white section is read correctly.
+
 ## Verification (4 Oct 2026, re-run 6 Oct 2026)
 
 - `npm run typecheck` and `npm run build` pass. Static outputs: `/`, `/_not-found`, `/icon.svg`.
 - Headless Chrome at 375, 768 and 1440: no horizontal scroll, no console errors, no broken images, every reveal
   target visible after scrolling. The same holds with reduced motion, where there is no Lenis and no preloader, all
   content shows and the film stays paused.
-- `npm run links`: 48 unique destinations, all 200 and all in the live sitemap (careers is its own subdomain). Every
+- `npm run links`: 52 unique destinations, all 200 and all in the live sitemap (careers is its own subdomain). Every
   outbound link has new-tab and noopener set, and every `#` link has a target.
 

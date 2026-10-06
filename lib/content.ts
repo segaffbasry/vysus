@@ -21,6 +21,7 @@ export const sections: Link[] = [
   { label: "Case studies", href: "#case-studies" },
   { label: "Who we are", href: "#who-we-are" },
   { label: "News and insights", href: "#news" },
+  { label: "Careers", href: "#careers" },
   { label: "Subscribe", href: "#subscribe" },
 ];
 
@@ -118,6 +119,21 @@ export const news = {
       image: "/media/news-evidence.webp", alt: "",
     },
   ] as Card[],
+};
+
+/* Careers: the live homepage only links to careers.vysusgroup.com from its nav, so this section brings that site's own
+   material onto the page: its header film (the brand chevrons), its "Locations" line, its three values and its
+   links. Copy is verbatim from careers.vysusgroup.com. */
+export const careers = {
+  label: "Careers",
+  title: "Our global reach enables Vysus Group to offer opportunities across the world.",
+  stat: { value: 20, suffix: "+", label: "Locations" },
+  values: ["Trust", "Partnership", "Passion"],
+  film: { mp4: "/media/careers.mp4", poster: "/media/careers-poster.jpg" },
+  actions: [
+    { label: "View Vacancies", href: "https://careers.vysusgroup.com/#Vacancies" },
+    { label: "Career testimonials", href: `${B}/career-testimonials` },
+  ],
 };
 
 export const subscribe = {

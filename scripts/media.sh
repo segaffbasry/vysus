@@ -12,6 +12,8 @@ get() { [ -s "$RAW/$2" ] || curl -sfL -A "$UA" "$B/$1" -o "$RAW/$2"; }
 # name                                                                                                   local
 get assets/engineering-1080.webm                                                                          hero-1080.webm
 get assets/engineering-720.webm                                                                           hero-720.webm
+# The careers site's header film (careers.vysusgroup.com plays it from S3; the main site serves the same file).
+get assets/header-v3.mp4                                                                                  careers.mp4
 get imager/general/25246/GettyImages-91624225_2021-03-29-063809_4107e36cd9a37812ac9f8ba3c6b67317.jpg       services.jpg
 get imager/general/78131/GettyImages-1252680958_786f5bc2871f2a70489f19ea669f60b1.jpg                       subscribe.jpg
 get imager/general/157391/Thomas-Aas-Saethre-web_94160162de61984a551634eca5d4cadf_51fcfd2ff5a7410d126c305193335a32.jpg news-rennie.jpg
@@ -37,6 +39,10 @@ node scripts/logo.mjs
 [ -f "$OUT/hero.mp4" ] || ffmpeg -v error -y -i "$RAW/hero-1080.webm" -an -vf "scale=1440:-2" -c:v libx264 -crf 29 -preset slow -pix_fmt yuv420p -movflags +faststart "$OUT/hero.mp4"
 [ -f "$OUT/hero-720.mp4" ] || ffmpeg -v error -y -i "$RAW/hero-720.webm" -an -vf "scale=960:-2" -c:v libx264 -crf 27 -preset slow -pix_fmt yuv420p -movflags +faststart "$OUT/hero-720.mp4"
 [ -f "$OUT/hero-poster.jpg" ] || ffmpeg -v error -y -ss 0.4 -i "$RAW/hero-1080.webm" -frames:v 1 -vf "scale=1600:-2" -q:v 3 "$OUT/hero-poster.jpg"
+
+# Careers: the brand chevron film, silent, 1280 wide (flat graphics compress well), plus its poster.
+[ -f "$OUT/careers.mp4" ] || ffmpeg -v error -y -i "$RAW/careers.mp4" -an -vf "scale=1280:-2" -c:v libx264 -crf 28 -preset slow -pix_fmt yuv420p -movflags +faststart "$OUT/careers.mp4"
+[ -f "$OUT/careers-poster.jpg" ] || ffmpeg -v error -y -ss 9 -i "$RAW/careers.mp4" -frames:v 1 -vf "scale=1280:-2" -q:v 3 "$OUT/careers-poster.jpg"
 
 # Who we are: a still from the same film (16s, the engineer with the plant overlay).
 [ -f "$OUT/who.webp" ] || { ffmpeg -v error -y -ss 16 -i "$RAW/hero-1080.webm" -frames:v 1 "$RAW/who.png" && cwebp -quiet -q 80 "$RAW/who.png" -o "$OUT/who.webp"; }
